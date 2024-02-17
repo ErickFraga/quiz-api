@@ -10,34 +10,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Poll {
+model Question {
   id        String   @id @default(uuid())
   title     String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
-  options PollOption[]
-  Vote    Vote[]
+  options  QuestionOption[]
+  answares Answer[]
 }
 
-model PollOption {
-  id     String @id @default(uuid())
-  title  String
-  pollId String
+model QuestionOption {
+  id         String @id @default(uuid())
+  title      String
+  questionId String
 
-  poll Poll   @relation(fields: [pollId], references: [id])
-  vote Vote[]
+  question Question @relation(fields: [questionId], references: [id])
+  answers  Answer[]
 }
 
-model Vote {
-  id           Int      @id @default(autoincrement())
-  sessionId    String
-  pollId       String
-  pollOptionId String
-  createdAt    DateTime @default(now())
+model Answer {
+  id               Int      @id @default(autoincrement())
+  sessionId        String
+  questionOptionId String
+  questionId       String
+  createdAt        DateTime @default(now())
 
-  pollOption PollOption @relation(fields: [pollOptionId], references: [id])
-  poll       Poll       @relation(fields: [pollId], references: [id])
+  questionOption QuestionOption @relation(fields: [questionOptionId], references: [id])
+  question       Question       @relation(fields: [questionId], references: [id])
 
-  @@unique([sessionId, pollId])
+  @@unique([sessionId, questionId])
 }

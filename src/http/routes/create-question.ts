@@ -2,9 +2,9 @@ import { FastifyInstance } from "fastify";
 import z from "zod";
 import { prisma } from "../../lib/prisma";
 
-export async function createPoll(app: FastifyInstance) {
-  app.post("/polls", async (request, reply) => {
-    const createPollRequestBody = z.object({
+export async function createQuestion(app: FastifyInstance) {
+  app.post("/questions", async (request, reply) => {
+    const createQuestionRequestBody = z.object({
       title: z.string().min(3, { message: "O titulo precisa ter no mínimo 3 caracteres!" }),
       options: z
         .array(
@@ -16,9 +16,9 @@ export async function createPoll(app: FastifyInstance) {
         .max(10, { message: "Uma Enquete pode ter no máximo 10 alternativas!" }),
     });
 
-    const { title, options } = createPollRequestBody.parse(request.body);
+    const { title, options } = createQuestionRequestBody.parse(request.body);
 
-    const poll = await prisma.poll.create({
+    const question = await prisma.question.create({
       data: {
         title,
         options: {
@@ -28,6 +28,6 @@ export async function createPoll(app: FastifyInstance) {
         },
       },
     });
-    return reply.status(201).send({ pollId: poll.id });
+    return reply.status(201).send({ questionId: question.id });
   });
 }

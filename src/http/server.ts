@@ -1,13 +1,13 @@
 import fastify from "fastify";
 import cookie from "@fastify/cookie"
 import websocket from "@fastify/websocket"
-import { createPoll } from "./routes/create-poll";
-import { getPoll } from "./routes/get-poll";
-import { voteOnPoll } from "./routes/vote-on-poll";
-import { createManyPolls } from "./routes/crate-many-polls";
-import { pollResults } from "./ws/poll-results";
+import { createQuestion } from "./routes/create-question";
+import { getQuestion } from "./routes/get-question";
+import { answerQuestion } from "./routes/vote-on-poll";
+import { createManyQuestions } from "./routes/crate-many-questions";
+import { questionResults } from "./ws/question-results";
 import fastifyCors from "@fastify/cors";
-import { getPolls } from "./routes/get-polls";
+import { getQuestions } from "./routes/get-questions";
 
 const app = fastify()
 
@@ -16,19 +16,19 @@ app.register(fastifyCors, {
 })
 
 app.register(cookie, {
-  secret: "polls-app-nlw",
+  secret: "quizzz",
   hook: "onRequest",
 })
 
 app.register(websocket)
 
-app.register(pollResults)
-app.register(createPoll)
-app.register(createManyPolls)
-app.register(getPoll)
-app.register(getPolls)
-app.register(voteOnPoll)
+app.register(questionResults)
+app.register(createQuestion)
+app.register(createManyQuestions)
+app.register(getQuestion)
+app.register(getQuestions)
+app.register(answerQuestion)
 
-app.listen({port: 3301}).then(() => {
+app.listen({ port: 3301 }).then(() => {
   console.log("HTTP server running!")
 })

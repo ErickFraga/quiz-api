@@ -1,18 +1,17 @@
 import { prisma } from "../lib/prisma";
-import { redis } from "../lib/redis";
 
-export async function sumScoresFromSet(pollId:string) {
+export async function sumScoresFromSet(questionId: string) {
   try {
-    const votes = await prisma.vote.count({
-      where:{
-        pollId
+    const answers = await prisma.answer.count({
+      where: {
+        questionId
       }
     })
 
-    return votes;
+    return answers;
   } catch (error) {
     console.error('Error:', error);
     return 0;
-  } 
+  }
 }
 
