@@ -3,7 +3,7 @@ import cookie from "@fastify/cookie"
 import websocket from "@fastify/websocket"
 import { createQuestion } from "./routes/create-question";
 import { getQuestion } from "./routes/get-question";
-import { answerQuestion } from "./routes/vote-on-poll";
+import { answerQuestion } from "./routes/answer-question";
 import { createManyQuestions } from "./routes/crate-many-questions";
 import { questionResults } from "./ws/question-results";
 import fastifyCors from "@fastify/cors";
